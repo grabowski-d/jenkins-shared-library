@@ -1,0 +1,42 @@
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url 'https://repo.jenkins-ci.org/releases/' }
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['src', 'vars']
+        }
+        resources {
+            srcDirs = ['resources']
+        }
+    }
+    test {
+        groovy {
+            srcDirs = ['test']
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:3.0.10'
+    implementation 'org.jenkins-ci.main:jenkins-core:2.344'
+    implementation 'org.jenkins-ci.plugins.workflow:workflow-step-api:2.24@jar'
+    implementation 'org.jenkins-ci.plugins:pipeline-utility-steps:2.12.0@jar'
+
+    testImplementation 'com.lesfurets:jenkins-pipeline-unit:1.14'
+    testImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
+}
+
+
